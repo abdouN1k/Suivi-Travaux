@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="fr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#14532d"><meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="manifest.webmanifest"><link rel="stylesheet" href="style.css">
+<title>Suivi Travaux</title></head>
+<body>
+<header><div><b>SUIVI TRAVAUX</b><small>COSIDER AGRICO · Unité Espaces Verts</small></div><button id="install" hidden>Installer</button></header>
+<main>
+<section id="home" class="screen active">
+ <div class="hero"><div><small id="dateNow"></small><h1>Tableau de bord</h1></div><button class="green" onclick="go('add')">＋ Travail</button></div>
+ <div class="stats"><div><b id="nAll">0</b><span>Travaux</span></div><div><b id="nRun">0</b><span>En cours</span></div><div><b id="nDone">0</b><span>Terminés</span></div><div><b id="nAvg">0%</b><span>Avancement</span></div></div>
+ <h2>Derniers travaux</h2><div id="recent"></div>
+</section>
+<section id="add" class="screen">
+ <div class="title"><button onclick="go('home')">‹</button><h2>Nouveau travail</h2></div>
+ <form id="form">
+  <label>Date<input id="date" type="date" required></label>
+  <label>Zone<input id="zone" placeholder="Ex : Zone 01" required></label>
+  <label>Équipe<input id="team" placeholder="Ex : Équipe A" required></label>
+  <label>Responsable<input id="resp" placeholder="Nom du responsable"></label>
+  <label>Nature des travaux<input id="type" placeholder="Ex : Entretien espaces verts" required></label>
+  <div class="two"><label>Quantité<input id="qty" type="number" min="0" step="0.01"></label><label>Unité<input id="unit" placeholder="m²"></label></div>
+  <div class="two"><label>Début<input id="start" type="time"></label><label>Fin<input id="end" type="time"></label></div>
+  <label>Avancement : <b id="pct">0%</b><input id="percent" type="range" min="0" max="100" value="0"></label>
+  <label>Statut<select id="status"><option>En cours</option><option>Terminé</option><option>En attente</option></select></label>
+  <label>Remarques<textarea id="notes" rows="4"></textarea></label>
+  <label>Photo<input id="photo" type="file" accept="image/*" capture="environment"></label>
+  <button class="green wide" type="submit">Enregistrer</button>
+ </form>
+</section>
+<section id="list" class="screen">
+ <div class="title"><h2>Suivi des travaux</h2></div>
+ <input id="search" placeholder="🔎 Rechercher..." oninput="renderList()">
+ <select id="filter" onchange="renderList()"><option value="">Tous les statuts</option><option>En cours</option><option>Terminé</option><option>En attente</option></select>
+ <div id="all"></div>
+</section>
+<section id="report" class="screen">
+ <div class="title"><h2>Synthèse mensuelle</h2></div>
+ <div class="report"><p>Travaux <b id="rAll">0</b></p><p>En cours <b id="rRun">0</b></p><p>Terminés <b id="rDone">0</b></p><p>Avancement moyen <b id="rAvg">0%</b></p></div>
+ <button class="wide white" onclick="exportCSV()">⬇️ Exporter CSV / Excel</button>
+ <button class="wide red" onclick="wipe()">🗑️ Effacer les données</button>
+</section>
+</main>
+<nav><button onclick="go('home')">🏠<small>Accueil</small></button><button onclick="go('add')">➕<small>Ajouter</small></button><button onclick="go('list')">📋<small>Travaux</small></button><button onclick="go('report')">📊<small>Rapports</small></button></nav>
+<script src="app.js"></script></body></html>
